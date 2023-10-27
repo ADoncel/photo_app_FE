@@ -31,8 +31,6 @@ interface upProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
-  username: string;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
   alignment: string;
   setAlignment: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -42,12 +40,11 @@ const SignUp = ({
   setEmail,
   password,
   setPassword,
-  username,
-  setUsername,
   alignment,
   setAlignment,
 }: upProps) => {
   const [register, setRegister] = React.useState<boolean>(false);
+  const [username, setUsername] = React.useState<string>("");
 
   // TODO: Change this to HTTPS and correct URL when deployed
   const configuration = {

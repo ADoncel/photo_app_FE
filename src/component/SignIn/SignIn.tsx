@@ -11,6 +11,9 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import axios from "axios";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 function Copyright(props: any) {
   return (
@@ -32,7 +35,6 @@ interface inProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
-  setUsername: React.Dispatch<React.SetStateAction<string>>;
   setAlignment: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -41,7 +43,6 @@ const SignIn = ({
   setEmail,
   password,
   setPassword,
-  setUsername,
   setAlignment,
 }: inProps) => {
   const [login, setLogin] = React.useState<boolean>(false);
@@ -61,7 +62,12 @@ const SignIn = ({
     axios(configuration)
       .then((result) => {
         setLogin(true);
-        setUsername(result.data.username)
+        cookies.set("TOKEN", result.data.token, {
+          path: "/",
+        });
+        cookies.set("USERNAME", result.data.username, {
+          path: "/",
+        });
       })
       .catch((error) => {
         error = new Error();

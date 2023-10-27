@@ -7,7 +7,7 @@ const Login = () => {
   const [alignment, setAlignment] = React.useState<string>("signin");
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
-  const [username, setUsername] = React.useState<string>("");
+  
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
@@ -34,7 +34,6 @@ const Login = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
-          setUsername={setUsername}
           setAlignment={setAlignment}
         />
       ) : (
@@ -43,8 +42,6 @@ const Login = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
-          username={username}
-          setUsername={setUsername}
           alignment={alignment}
           setAlignment={setAlignment}
         />
