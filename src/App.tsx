@@ -5,6 +5,8 @@ import Album from "./component/Album/Album";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
 function App() {
+  const [user, setUser] = React.useState<string>("user");
+
   return (
     <div className="App">
       <BrowserRouter>

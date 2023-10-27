@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import axios from "axios";
 
 function Copyright(props: any) {
   return (
@@ -25,15 +26,49 @@ function Copyright(props: any) {
   );
 }
 
-const SignUp = () => {
+interface upProps {
+  email: string;
+  password: string;
+  alignment: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setAlignment: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SignUp = ({
+  email,
+  password,
+  alignment,
+  setEmail,
+  setPassword,
+  setAlignment,
+}: upProps) => {
+  const [register, setRegister] = React.useState<boolean>(false);
+
+  // TODO: Change this to HTTPS and correct URL when deployed
+  const configuration = {
+    method: "post",
+    url: "http://localhost:5000/register",
+    data: {
+      email,
+      password,
+    },
+  };
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+    axios(configuration)
+      .then((result) => {
+        setRegister(true);
+      })
+      .catch((error) => {
+        error = new Error();
+      });
   };
+
+  React.useEffect(() => {
+    if(register) setAlignment('signin');
+  }, [register, setAlignment, alignment])
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,6 +97,8 @@ const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -72,7 +109,9 @@ const SignUp = () => {
                 label="Password"
                 type="password"
                 id="password"
+                value={password}
                 autoComplete="new-password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </Grid>
           </Grid>
@@ -81,6 +120,7 @@ const SignUp = () => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={() => handleSubmit}
           >
             Sign Up
           </Button>
@@ -89,6 +129,6 @@ const SignUp = () => {
       <Copyright sx={{ mt: 500 }} />
     </Container>
   );
-}
+};
 
 export default SignUp;

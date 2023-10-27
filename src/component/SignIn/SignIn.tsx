@@ -10,6 +10,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import axios from "axios";
 
 function Copyright(props: any) {
   return (
@@ -26,23 +27,37 @@ function Copyright(props: any) {
   );
 }
 
-interface toggleProps {
-  setAlignment: React.Dispatch<React.SetStateAction<string>>
+interface inProps {
+  email: string;
+  password: string;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setPassword: React.Dispatch<React.SetStateAction<string>>;
+  setAlignment: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SignIn = (props: toggleProps) => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+const SignIn = ({email, password, setEmail, setPassword, setAlignment}: inProps) => {
+  const [login, setLogin] = React.useState<boolean>(false);
+
+  // TODO: Change this to HTTPS and correct URL when deployed
+  const configuration = {
+    method: "post",
+    url: "http://localhost:5000/login",
+    data: {
+      email,
+      password,
+    },
   };
 
-  const handleClick = (newAligment: string) => {
-    props.setAlignment(newAligment)
-  }
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    axios(configuration)
+      .then((result) => {
+        setLogin(true);
+      })
+      .catch((error) => {
+        error = new Error();
+      });
+  };
 
   return (
     <Container component="main" maxWidth="xs">
@@ -76,6 +91,8 @@ const SignIn = (props: toggleProps) => {
             name="email"
             autoComplete="email"
             autoFocus
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <TextField
             margin="normal"
@@ -86,6 +103,8 @@ const SignIn = (props: toggleProps) => {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -96,13 +115,19 @@ const SignIn = (props: toggleProps) => {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={() => handleSubmit}
           >
             Sign In
           </Button>
-          <Link onClick={() => handleClick('singup')}>
+          <Link onClick={() => setAlignment('signup')}>
             {"Don't have an account? Sign Up"}
           </Link>
         </Box>
+        {login ? (
+          <p className="text-success">You Logged in Succesfully</p>
+        ) : (
+          <p className="text-danger"></p>
+        )}
       </Box>
       <Copyright />
     </Container>
