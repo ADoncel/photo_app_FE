@@ -29,13 +29,23 @@ function Copyright(props: any) {
 
 interface inProps {
   email: string;
-  password: string;
   setEmail: React.Dispatch<React.SetStateAction<string>>;
+  password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
+  username: string;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
   setAlignment: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const SignIn = ({email, password, setEmail, setPassword, setAlignment}: inProps) => {
+const SignIn = ({
+  email,
+  setEmail,
+  password,
+  setPassword,
+  username,
+  setUsername,
+  setAlignment,
+}: inProps) => {
   const [login, setLogin] = React.useState<boolean>(false);
 
   // TODO: Change this to HTTPS and correct URL when deployed
@@ -53,6 +63,7 @@ const SignIn = ({email, password, setEmail, setPassword, setAlignment}: inProps)
     axios(configuration)
       .then((result) => {
         setLogin(true);
+        console.log(result)
       })
       .catch((error) => {
         error = new Error();
@@ -119,7 +130,7 @@ const SignIn = ({email, password, setEmail, setPassword, setAlignment}: inProps)
           >
             Sign In
           </Button>
-          <Link onClick={() => setAlignment('signup')}>
+          <Link onClick={() => setAlignment("signup")}>
             {"Don't have an account? Sign Up"}
           </Link>
         </Box>
