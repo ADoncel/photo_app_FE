@@ -34,7 +34,6 @@ const Login = () => {
           setEmail={setEmail}
           password={password}
           setPassword={setPassword}
-          username={username}
           setUsername={setUsername}
           setAlignment={setAlignment}
         />

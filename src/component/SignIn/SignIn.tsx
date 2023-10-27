@@ -32,7 +32,6 @@ interface inProps {
   setEmail: React.Dispatch<React.SetStateAction<string>>;
   password: string;
   setPassword: React.Dispatch<React.SetStateAction<string>>;
-  username: string;
   setUsername: React.Dispatch<React.SetStateAction<string>>;
   setAlignment: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -42,7 +41,6 @@ const SignIn = ({
   setEmail,
   password,
   setPassword,
-  username,
   setUsername,
   setAlignment,
 }: inProps) => {
@@ -63,7 +61,7 @@ const SignIn = ({
     axios(configuration)
       .then((result) => {
         setLogin(true);
-        console.log(result)
+        setUsername(result.data.username)
       })
       .catch((error) => {
         error = new Error();
