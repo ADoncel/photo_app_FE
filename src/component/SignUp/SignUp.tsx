@@ -44,12 +44,14 @@ const SignUp = ({
   setAlignment,
 }: upProps) => {
   const [register, setRegister] = React.useState<boolean>(false);
+  const [username, setUsername] = React.useState<string>("");
 
   // TODO: Change this to HTTPS and correct URL when deployed
   const configuration = {
     method: "post",
     url: "http://localhost:5000/register",
     data: {
+      username,
       email,
       password,
     },
@@ -67,8 +69,8 @@ const SignUp = ({
   };
 
   React.useEffect(() => {
-    if(register) setAlignment('signin');
-  }, [register, setAlignment, alignment])
+    if (register) setAlignment("signin");
+  }, [register, setAlignment, alignment]);
 
   return (
     <Container component="main" maxWidth="xs">
@@ -89,6 +91,18 @@ const SignUp = ({
         </Typography>
         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="username"
+                label="Username"
+                name="username"
+                autoComplete="username (alias)"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
