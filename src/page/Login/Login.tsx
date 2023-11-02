@@ -2,12 +2,17 @@ import React from "react";
 import SingIn from "../../component/SignIn/SignIn";
 import SingUp from "../../component/SignUp/SignUp";
 import { ToggleButtonGroup, ToggleButton } from "@mui/material";
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 const Login = () => {
   const [alignment, setAlignment] = React.useState<string>("signin");
   const [email, setEmail] = React.useState<string>("");
   const [password, setPassword] = React.useState<string>("");
   
+  let token = cookies.get("TOKEN")
+  if (token) window.location.href = "/user";
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,

@@ -13,6 +13,9 @@ import Link from "@mui/material/Link";
 import Download from "@mui/icons-material/Download";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import IconButton from '@mui/material/IconButton';
+import Cookies from "universal-cookie";
+
+const cookies = new Cookies();
 
 function Copyright(props: any) {
   return (
@@ -32,6 +35,7 @@ function Copyright(props: any) {
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
+  let user = cookies.get("USERNAME")
   return (
     <>
       <CssBaseline />
@@ -52,7 +56,7 @@ export default function Album() {
               color="text.primary"
               gutterBottom
             >
-              User's photos
+              {user + "'s photos"}
             </Typography>
             <Stack
               sx={{ pt: 4 }}

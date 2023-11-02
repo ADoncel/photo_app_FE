@@ -68,6 +68,7 @@ const SignIn = ({
         cookies.set("USERNAME", result.data.username, {
           path: "/",
         });
+        window.location.href = "/user";
       })
       .catch((error) => {
         error = new Error();
